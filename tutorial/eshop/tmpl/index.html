@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% autoescape on %}
+{% block content %}
+{% include "nav.html"%}
+
+hi,welcome!
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<table align="center">
+<tr>
+<td>
+<form action="/query" method="post">
+{% csrf_token %}
+   <input type="text" name="productname">
+   <input type="submit" value="提交">
+</form>
+</td>
+</tr>
+</table>
+
+
+<br/>
+{%include "pagenav.html"%}
+<table id="result_list" align="center">
+<thead>
+<tr>
+
+<th scope="col"  class="action-checkbox-column">
+   
+   <div class="text"><span>name</span></div>
+  
+</th>
+<th scope="col"  class="action-checkbox-column">
+   
+   <div class="text"><span>price</span></div>
+  
+</th>
+<th scope="col"  class="action-checkbox-column">
+   
+   <div class="text"><span>type</span></div>
+  
+</th>
+<th scope="col"  class="action-checkbox-column">
+   
+   <div class="text"><span>image</span></div>
+  
+</th>
+</tr>
+</thead>
+<tbody>
+
+{%for obj in page.object_list%}
+<tr class="{%cycle row1,row2%}">
+<th>{{obj.name}}<br><a href="/order?pid={{obj.id}}">订购</a></th>
+
+<th>{{obj.price}}</a></th>
+<th>{{obj.ptype}}</a></th>
+<th><img src="/media/{{obj.img}}"/></th>
+</tr>
+{%endfor%}
+</tbody>
+</table>
+{% endblock %}
+{% endautoescape %}
